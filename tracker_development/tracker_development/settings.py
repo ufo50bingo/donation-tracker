@@ -29,6 +29,10 @@ ALLOWED_HOSTS = [
   'donation-tracker-production-f333.up.railway.app'
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+  'https://donation-tracker-production-f333.up.railway.app'
+]
+
 
 # Application definition
 

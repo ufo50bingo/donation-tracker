@@ -1,7 +1,7 @@
 {
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
-    "buildCommand": "yarn install --immutable && yarn build"
+    "buildCommand": "corepack enable && yarn install --immutable && yarn build"
   },
   "deploy": {
     "startCommand": "cd tracker_development && PYTHONPATH=.. python manage.py migrate && PYTHONPATH=.. python manage.py collectstatic --noinput && PYTHONPATH=.. daphne -b 0.0.0.0 -p $PORT tracker_development.asgi:application"

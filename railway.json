@@ -1,7 +1,6 @@
 {
   "$schema": "https://railway.com/railway.schema.json",
   "deploy": {
-    "preDeployCommand": "cd tracker_development && PYTHONPATH=.. python manage.py migrate",
-    "startCommand": "cd tracker_development && PYTHONPATH=.. daphne -b 0.0.0.0 -p $PORT tracker_development.asgi:application"
+    "startCommand": "cd tracker_development && PYTHONPATH=.. python manage.py migrate && PYTHONPATH=.. daphne -b 0.0.0.0 -p $PORT tracker_development.asgi:application"
   }
 }

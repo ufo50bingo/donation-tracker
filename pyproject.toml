@@ -39,6 +39,7 @@ dependencies = [
   'python-dateutil~=2.8.1;python_version<"3.11"',
   'requests>=2.33.1,<2.35.0',
   "daphne>=4.0",
+  "whitenoise>=6.12.0",
 ]
 description = 'A Django app to assist in tracking donations for live broadcast events.'
 dynamic = ['version']

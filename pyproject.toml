@@ -38,6 +38,7 @@ dependencies = [
   'djangorestframework~=3.9',
   'python-dateutil~=2.8.1;python_version<"3.11"',
   'requests>=2.33.1,<2.35.0',
+  "daphne>=4.0",
 ]
 description = 'A Django app to assist in tracking donations for live broadcast events.'
 dynamic = ['version']
@@ -47,7 +48,6 @@ readme = 'README.md'
 requires-python = '>= 3.10'
 [project.optional-dependencies]
 development = [
-  'daphne~=4.0',
 ]
 tqdm = [
   'tqdm>=4.67.1,<4.69.0',

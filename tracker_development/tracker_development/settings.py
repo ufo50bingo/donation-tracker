@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-1adkf8pn-te#@&ubb4t)e2aatun2ltg6pbbp5m(x36+w6q791!
 DEBUG = True
 
 ALLOWED_HOSTS = [
-  'donation-tracker-production-f333.up.railway.app'
+  'donation-tracker-production-f333.up.railway.app',
+  'donate.cherry-rush.org',
 ]
 
 CSRF_TRUSTED_ORIGINS = [

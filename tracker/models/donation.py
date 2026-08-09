@@ -677,7 +677,8 @@ class DonorCache(models.Model):
 
     def update(self):
         # TODO: separate caches for test donations?
-        donations = Donation.objects.completed().filter(testdonation=False)
+        # TODO(frank): Remove test donations again
+        donations = Donation.objects.completed()
         if self.donor:
             donations = donations.filter(donor=self.donor)
         if self.event:

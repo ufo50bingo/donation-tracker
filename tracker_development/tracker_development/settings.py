@@ -32,7 +32,8 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-  'https://donation-tracker-production-f333.up.railway.app'
+  'https://donation-tracker-production-f333.up.railway.app',
+  'https://donate.cherry-rush.org',
 ]
 
 

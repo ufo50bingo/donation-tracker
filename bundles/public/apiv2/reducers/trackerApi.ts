@@ -922,3 +922,5 @@ export const trackerApi = trackerBaseApi.enhanceEndpoints({
     },
   },
 });
+
+trackerApi.useDonateMutation();

@@ -40,7 +40,6 @@ import styles from './Donate.mod.css';
 const AMOUNT_PRESETS = [25, 50, 75, 100, 250, 500];
 
 function Internal({ event }: { event: Event }) {
-  console.log('rendering donate page?');
   const { PRIVACY_POLICY_URL, SWEEPSTAKES_URL, PAYPAL_MAXIMUM_AMOUNT } = useConstants();
   const { data: prizes, ...prizesState } = usePrizesQuery(
     { urlParams: { eventId: event.id, feed: 'current' } },

@@ -27,8 +27,6 @@ type DonationIncentivesProps = {
 const DonationIncentives = (props: DonationIncentivesProps) => {
   const { addBid, className, bids, donation, deleteBid } = props;
 
-  console.log('bids are', bids);
-
   const [search, setSearch] = React.useState('');
   const [selectedIncentiveId, setSelectedIncentiveId] = React.useState<number | null>(null);
   const [showForm, setShowForm] = React.useState(false);

@@ -32,7 +32,6 @@ def paypal_return(request):
 @cache_page(300)
 def donate(request, event):
     event = viewutil.get_event(event)
-    print("hello from donate page")
     if not event.allow_donations:
         raise Http404
     return HttpResponsePermanentRedirect(reverse('tracker:ui:donate', args=(event.id,)))

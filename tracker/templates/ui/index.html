@@ -1,35 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block nav %}
+{% if not hide_nav %}{{ block.super }}{% endif %}
+{% endblock %}
+
 {% block title %}
-    {{ event.name }}{% if title %} &mdash; {{ title }}{% endif %}
+{{ event.name }}{% if title %} &mdash; {{ title }}{% endif %}
 {% endblock %}
 
 {% block head %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{ app_name|json_script:'app_name' }}
-    {{ CONSTANTS|json_script:'CONSTANTS' }}
-    {{ API_PREFETCH|json_script:'API_PREFETCH' }}
-    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{ app_name|json_script:'app_name' }}
+{{ CONSTANTS|json_script:'CONSTANTS' }}
+{{ API_PREFETCH|json_script:'API_PREFETCH' }}
+<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
 
-    <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %><script defer src="{% static '<%- file %>' %}"></script><% }); %>
-    <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %><link href="{% static '<%- file %>' %}" rel="stylesheet"><% }); %>
+<% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
+  <script defer src="{% static '<%- file %>' %}"></script>
+  <% }); %>
+    <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
+      <link href="{% static '<%- file %>' %}" rel="stylesheet">
+      <% }); %>
 
-    <script type='text/javascript'>
-      <!--
-      window.webpackPublicPath = "{% static 'gen/' %}";
-      document.addEventListener("DOMContentLoaded", function () {
-        window[JSON.parse(document.getElementById('app_name').textContent)]();
-      });
-      -->
-    </script>
-{% endblock %}
+        <script type='text/javascript'>
+          <!-
+          window.webpackPublicPath = "{% static 'gen/' %}";
+          document.addEventListener("DOMContentLoaded", function () {
+            window[JSON.parse(document.getElementById('app_name').textContent)]();
+          });
+           ->
+        </script>
+        {% endblock %}
 
-{% block content %}
-    {% csrf_token %}
-    <div id="container"></div>
-{% endblock %}
+        {% block content %}
+        {% csrf_token %}
+        <div id="container"></div>
+        {% endblock %}
 
-{% block bodyend %}
-<%= htmlWebpackPlugin.tags.bodyTags %>
-{% endblock %}
+        {% block bodyend %}
+        <%= htmlWebpackPlugin.tags.bodyTags %>
+          {% endblock %}

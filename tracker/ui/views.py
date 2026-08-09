@@ -144,6 +144,7 @@ def donate(request, event):
             'app_name': 'TrackerApp',
             'API_PREFETCH': prefetch,
             'title': 'Donation Tracker',
+            'hide_nav': True,
             'settings': {
                 'TRACKER_SWEEPSTAKES_URL': settings.TRACKER_SWEEPSTAKES_URL,
                 'TRACKER_LOGO': settings.TRACKER_LOGO,

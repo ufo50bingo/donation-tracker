@@ -9,7 +9,7 @@ from itertools import pairwise
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError as DjangoValidationError
-from django.core.signing import BadSignature, TimestampSigner
+from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
 from django.db import transaction
 from django.http import HttpResponse
 from django.template.response import SimpleTemplateResponse

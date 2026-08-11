@@ -149,7 +149,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ASGI_APPLICATION = 'tracker_development.routing.application'
+ASGI_APPLICATION = 'tracker_development.asgi.application'
 CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 PAYPAL_TEST = True
 TRACKER_PAYPAL_MAX_DONATE_AGE = 600

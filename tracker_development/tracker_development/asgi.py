@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/
 
 import os
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tracker_development.settings')
+os.environ.setdefault(
+    'DJANGO_SETTINGS_MODULE',
+    'tracker_development.settings',
+)
 
 from .routing import application

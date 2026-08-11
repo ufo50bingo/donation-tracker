@@ -10,6 +10,7 @@ from django.db.models import Count, Sum
 
 import tracker.models as models
 import tracker.viewutil as viewutil
+from tracker.api.serializers import BidSerializer
 from tracker.consumers.processing import broadcast_new_donation_to_processors
 from tracker.models.donation import DonorCache
 
@@ -26,6 +27,9 @@ def post_donation_to_postbacks(donation):
             (c for c in event.donorcache_set.all() if c.donor_id is None), DonorCache()
         )
     event_total = cache.donation_total
+
+    bids = list(donation.bids.public().select_related('bid'))
+    bid_serializer = BidSerializer([db.bid for db in bids])
 
     data = {
         'id': donation.id,
@@ -47,12 +51,13 @@ def post_donation_to_postbacks(donation):
                 'id': db.bid.id,
                 'total': float(db.bid.total),
                 'parent': db.bid.parent_id,
-                'name': db.bid.name,
+                'full_name': bid_serializer.get_full_name(db.bid),
                 'goal': float(db.bid.goal) if db.bid.goal else None,
                 'state': db.bid.state,
                 'speedrun': db.bid.speedrun_id,
+                'istarget': db.bid.istarget,
             }
-            for db in donation.bids.public().select_related('bid')
+            for db in bids
         ],
     }
 

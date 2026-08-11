@@ -20,10 +20,16 @@ def post_donation_to_postbacks(donation):
     agg = event_donations.aggregate(total=Sum('amount'), count=Count('amount'))
     total = agg['total']
     donation_count = agg['count']
+    event = models.Event.objects.filter(pk=donation.event_id).first()
+    cache = next(
+            (c for c in event.donorcache_set.all() if c.donor_id is None), DonorCache()
+        )
+    event_total = cache.donation_total
 
     data = {
         'id': donation.id,
         'event': donation.event_id,
+        'event_total': event_total,
         'timereceived': donation.timereceived.astimezone(
             donation.event.timezone
         ).isoformat(),

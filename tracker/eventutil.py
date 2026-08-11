@@ -11,6 +11,7 @@ from django.db.models import Count, Sum
 import tracker.models as models
 import tracker.viewutil as viewutil
 from tracker.consumers.processing import broadcast_new_donation_to_processors
+from tracker.models.donation import DonorCache
 
 logger = logging.getLogger(__name__)
 

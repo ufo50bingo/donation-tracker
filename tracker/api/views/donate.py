@@ -456,7 +456,7 @@ class DonateViewSet(GenericViewSet):
             logger.info(
                 "Creating PayPal q: ip=%s, q_len=%d",
                 request.META.get('REMOTE_ADDR'),
-                len(q),
+                len(data),
             )
             return Response(
                 {

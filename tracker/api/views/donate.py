@@ -385,17 +385,15 @@ class DonateViewSet(GenericViewSet):
     def paypal_confirm(self, request, *args, **kwargs):
         try:
             q = request.query_params.get('q', '')
-            ip = request.META.get('REMOTE_ADDR')
             try:
-                timed_signer = TimestampSigner(salt=ip)
+                timed_signer = TimestampSigner(salt="donation-submit")
                 signed = timed_signer.unsign_object(
                     q,
                     max_age=settings.TRACKER_PAYPAL_MAX_DONATE_AGE,
                 )
             except SignatureExpired as exc:
                 logger.warning(
-                    "PayPal q expired: ip=%s, q_len=%d, error=%s",
-                    ip,
+                    "PayPal q expired: q_len=%d, error=%s",
                     len(q),
                     exc,
                 )
@@ -403,8 +401,7 @@ class DonateViewSet(GenericViewSet):
 
             except BadSignature as exc:
                 logger.warning(
-                    "PayPal q invalid: ip=%s, q_len=%d, error=%s",
-                    ip,
+                    "PayPal q invalid: q_len=%d, error=%s",
                     len(q),
                     exc,
                 )
@@ -451,14 +448,8 @@ class DonateViewSet(GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         if serializer.data['domain'] == 'PAYPAL':
-            ip = request.META['REMOTE_ADDR']
-            signer = TimestampSigner(salt=ip)
+            signer = TimestampSigner(salt="donation-submit")
             data = signer.sign_object(serializer.data, compress=True)
-            logger.info(
-                "Creating PayPal q: ip=%s, q_len=%d",
-                ip,
-                len(data),
-            )
             return Response(
                 {
                     'confirm_url': request.build_absolute_uri(

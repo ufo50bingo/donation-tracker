@@ -31,6 +31,26 @@ def post_donation_to_postbacks(donation):
     bids = list(donation.bids.public().select_related('bid'))
     bid_serializer = BidSerializer([db.bid for db in bids])
 
+    logger.info("about to construct bid_data")
+
+    bid_data = [
+        {
+            'id': db.bid.id,
+            'total': float(db.bid.total),
+            'parent': db.bid.parent_id,
+            'name': db.bid.name,
+            'full_name': bid_serializer.get_full_name(db.bid),
+            'goal': float(db.bid.goal) if db.bid.goal else None,
+            'state': db.bid.state,
+            'speedrun': db.bid.speedrun_id,
+            'istarget': db.bid.istarget,
+        }
+        for db in bids
+    ]
+
+    logger.info("constructed bid_data")
+    logger.info(bid_data)
+
     data = {
         'id': donation.id,
         'event': donation.event_id,
@@ -46,19 +66,7 @@ def post_donation_to_postbacks(donation):
         'donor__visiblename': donation.donor and donation.donor.visible_name,
         'new_total': float(total),
         'domain': donation.domain,
-        'bids': [
-            {
-                'id': db.bid.id,
-                'total': float(db.bid.total),
-                'parent': db.bid.parent_id,
-                'full_name': bid_serializer.get_full_name(db.bid),
-                'goal': float(db.bid.goal) if db.bid.goal else None,
-                'state': db.bid.state,
-                'speedrun': db.bid.speedrun_id,
-                'istarget': db.bid.istarget,
-            }
-            for db in bids
-        ],
+        'bids': bid_data,
     }
 
     async_to_sync(get_channel_layer().group_send)(

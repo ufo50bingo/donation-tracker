@@ -30,7 +30,7 @@ def post_donation_to_postbacks(donation):
     data = {
         'id': donation.id,
         'event': donation.event_id,
-        'event_total': event_total,
+        'all_donors_event_total': float(event_total),
         'timereceived': donation.timereceived.astimezone(
             donation.event.timezone
         ).isoformat(),

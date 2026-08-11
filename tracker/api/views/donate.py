@@ -451,11 +451,12 @@ class DonateViewSet(GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         if serializer.data['domain'] == 'PAYPAL':
-            signer = TimestampSigner(salt=request.META['REMOTE_ADDR'])
+            ip = request.META['REMOTE_ADDR']
+            signer = TimestampSigner(salt=ip)
             data = signer.sign_object(serializer.data, compress=True)
             logger.info(
                 "Creating PayPal q: ip=%s, q_len=%d",
-                request.META.get('REMOTE_ADDR'),
+                ip,
                 len(data),
             )
             return Response(

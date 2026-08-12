@@ -18,6 +18,7 @@ import { useCachedCallback } from '@public/hooks/useCachedCallback';
 import * as CurrencyUtils from '@public/util/currency';
 import { useEventCurrency } from '@public/util/currency';
 import { hasItems } from '@public/util/Types';
+import Alert from '@uikit/Alert';
 import Anchor from '@uikit/Anchor';
 import Button from '@uikit/Button';
 import Checkbox from '@uikit/Checkbox';
@@ -159,6 +160,16 @@ function Internal({ event }: { event: Event }) {
     );
   }
 
+  const sumOfBids = donation.bids.map(b => b.amount).reduce((a, b) => a + b, 0);
+  const hasRemaining = sumOfBids < (donation.amount ?? 0);
+  const anyBidIsOpen = !(bids ?? []).every(
+    bid =>
+      bid.bid_type === 'challenge' &&
+      // @ts-expect-error db.id is fine. If it's null/undefined the comparison will fail
+      bid.total < (bid.goal ?? 0) + (donation.bids.find(db => db.id === bid.id)?.amount ?? 0),
+  );
+  const shouldAddIncentive = hasRemaining && anyBidIsOpen;
+
   return (
     <Container>
       {<form style={{ display: 'none' }} ref={confirmRef} action={confirmUrl} method="post" />}
@@ -293,6 +304,11 @@ function Internal({ event }: { event: Event }) {
       <section className={styles.section}>
         <Header size={Header.Sizes.H3}>Donate!</Header>
         <ErrorAlert errors={allErrors} />
+        {shouldAddIncentive && (
+          <Alert>
+            <Text>Select an incentive before donating!</Text>
+          </Alert>
+        )}
         <APIErrorList errors={donateState.error} reset={reset} />
         <Button
           size={Button.Sizes.LARGE}

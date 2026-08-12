@@ -29,7 +29,7 @@ const DonationIncentives = (props: DonationIncentivesProps) => {
 
   const [search, setSearch] = React.useState('');
   const [selectedIncentiveId, setSelectedIncentiveId] = React.useState<number | null>(null);
-  const [showForm, setShowForm] = React.useState(false);
+  const [showForm, setShowForm] = React.useState(bids.length > 0);
   const setShowFormTrue = React.useCallback(() => setShowForm(true), []);
   const searchResults = bids.filter(b => b.full_name.includes(search));
   const total = donation.bids.reduce((total, b) => total + b.amount, 0);
@@ -97,7 +97,7 @@ const DonationIncentives = (props: DonationIncentivesProps) => {
           fullwidth
           onClick={setShowFormTrue}
           data-testid="addincentives-button">
-          {bids.length > 0 ? 'Add Another Incentive' : 'Add Incentives'}
+          {donation.bids.length > 0 ? 'Add Another Incentive' : 'Add Incentives'}
         </Button>
       )}
     </div>

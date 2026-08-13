@@ -12,7 +12,7 @@ import tracker.models as models
 import tracker.viewutil as viewutil
 from tracker.api.serializers import BidSerializer
 from tracker.consumers.processing import broadcast_new_donation_to_processors
-from tracker.models.donation import DonorCache
+from tracker.models.donation import Donor, DonorCache
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +64,11 @@ def post_donation_to_postbacks(donation):
         # FIXME: donor being None only happens in tests
         'donor__visibility': donation.donor and donation.donor.visibility,
         'donor__visiblename': donation.donor and donation.donor.visible_name,
+        'donor_name': (
+            Donor.ANONYMOUS
+            if donation.anonymous() or not donation.requestedalias
+            else donation.requestedalias
+        ),
         'new_total': float(total),
         'domain': donation.domain,
         'bids': bid_data,

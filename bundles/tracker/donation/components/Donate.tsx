@@ -263,7 +263,7 @@ function Internal({ event }: { event: Event }) {
           value={donation.comment}
           label="Leave a Comment?"
           placeholder="Enter Comment Here"
-          hint="Please refrain from offensive language or hurtful remarks. All donation comments are screened and will be removed from the website if deemed unacceptable."
+          hint="Please refrain from offensive language or hurtful remarks."
           multiline
           onChange={updateComment}
           maxLength={5000}

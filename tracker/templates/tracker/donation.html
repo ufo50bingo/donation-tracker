@@ -2,6 +2,7 @@
 {% load donation_tags %}
 {% load i18n %}
 
+{% block nav %}{% endblock %}
 
 {% block title %}{% trans "Donation Detail" %} &mdash; {{ event.name }}{% endblock %}
 
@@ -77,7 +78,4 @@
             {% endfor %}
         </table>
     {% endif %}
-
-    <p align="center"><a href="{% url 'tracker:donationindex' event=donation.event.short %}">{% trans "Back to Donation Index" %}</a></p>
-    {% include "tracker/partials/navfooter.html" %}
 {% endblock %}

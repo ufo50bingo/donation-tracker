@@ -117,18 +117,6 @@
   {% block content %}{% endblock %}
 </div>
 {% block login %}{% endblock %}
-{% block credits %}
-
-    <div class="container-fluid text-center" style="margin-bottom:30px;">
-      {% blocktrans  %}
-        Running on Django with Python
-      {% endblocktrans %}{% if settings.TRACKER_CONTRIBUTORS_URL %}
-      <br/>
-      <a href="{{ settings.TRACKER_CONTRIBUTORS_URL }}">Contributors</a>
-      {% endif %}
-    </div>
-
-{% endblock %}
 {% block bodyend %}
 {% endblock %}
 </body>

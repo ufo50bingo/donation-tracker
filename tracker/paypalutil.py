@@ -41,7 +41,13 @@ def verify_ipn_recipient_email(ipn, email):
     https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNandPDTVariables/#mass-pay-variables
     """
     recipient_email = ipn.business if ipn.business else ipn.receiver_email
-    if recipient_email.lower() != email.lower():
+    # HACK: PIH uses info@pih.org, but the IPN comes from epacheco@pih.org
+    # They don't want to mess with their paypal info for us, so hardcoding
+    # the right value
+    accepted_emails = {email.lower()}
+    if email.lower == "info@pih.org":
+        accepted_emails.add("epacheco@pih.org")
+    if recipient_email.lower() not in accepted_emails:
         raise SpoofedIPNException(
             f"IPN receiver `{recipient_email}` doesn't match `{email}`"
         )

@@ -45,7 +45,7 @@ def verify_ipn_recipient_email(ipn, email):
     # They don't want to mess with their paypal info for us, so hardcoding
     # the right value
     accepted_emails = {email.lower()}
-    if email.lower == "info@pih.org":
+    if email.lower() == "info@pih.org":
         accepted_emails.add("epacheco@pih.org")
     if recipient_email.lower() not in accepted_emails:
         raise SpoofedIPNException(
